@@ -8,7 +8,11 @@ import { User, UserDocument } from 'src/user/schema';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create_user(values: CreateUserDto) {
+  public async findOne(email: string) {
+    return this.userModel.findOne({ email });
+  }
+
+  async createUser(values: CreateUserDto) {
     const newUser = new this.userModel(values);
     return newUser.save();
   }
