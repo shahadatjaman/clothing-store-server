@@ -33,6 +33,15 @@ export class AuthService {
     }
   }
 
+  public async findOne(email: string) {
+    const user = await this.userService.findOne(email);
+    if (user) {
+      return user;
+    } else {
+      return null;
+    }
+  }
+
   // Generate user payload
   generateUserPayload(user: UserDto) {
     const { _id, firstname, lastname, email, roles } = user;
