@@ -1,6 +1,9 @@
 import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
 
 export class ProductDTO {
+  private _id(_id: any) {
+    throw new Error('Method not implemented.');
+  }
   @IsNotEmpty({ message: 'The ProductAltId field cannot be empty!' })
   ProductAltId: string;
 

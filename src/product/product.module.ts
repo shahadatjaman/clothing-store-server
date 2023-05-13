@@ -4,18 +4,19 @@ import { ProductService } from './product.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from './schema/product';
 import {
-  ProducVariationtSchema,
+  ProductVariationtSchema,
   ProductVariation,
-} from './schema/product.color';
+} from './schema/product.variation';
+import { ResponseHelper } from 'src/utils/response.handler';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
     MongooseModule.forFeature([
-      { name: ProductVariation.name, schema: ProducVariationtSchema },
+      { name: Product.name, schema: ProductSchema },
+      { name: ProductVariation.name, schema: ProductVariationtSchema },
     ]),
   ],
   controllers: [ProductController],
-  providers: [ProductService],
+  providers: [ProductService, ResponseHelper],
 })
 export class ProductModule {}

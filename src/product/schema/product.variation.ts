@@ -1,16 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type ProductDocument = ProductVariation & Document;
+export type VariationDocument = ProductVariation & Document;
 
 @Schema()
 export class ProductVariation {
-  @Prop({ required: true })
-  _id: string;
-
-  @Prop({ required: true })
-  productId: string;
-
   @Prop({ required: true })
   productAltId: string;
 
@@ -18,5 +12,5 @@ export class ProductVariation {
   img: string;
 }
 
-export const ProducVariationtSchema =
+export const ProductVariationtSchema =
   SchemaFactory.createForClass(ProductVariation);
