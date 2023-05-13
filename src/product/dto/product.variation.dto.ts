@@ -5,5 +5,8 @@ export class VariationDTO {
   productAltId: string;
 
   @IsNotEmpty()
+  isStock: boolean;
+
+  @IsNotEmpty()
   img: string;
 }

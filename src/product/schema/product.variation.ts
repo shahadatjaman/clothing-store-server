@@ -9,6 +9,9 @@ export class ProductVariation {
   productAltId: string;
 
   @Prop({ required: true })
+  isStock: boolean;
+
+  @Prop({ required: true })
   img: string;
 }
 
