@@ -8,6 +8,8 @@ import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { ResponseHelper } from 'src/utils/response.handler';
 import { VariationDTO } from './dto/product.variation.dto';
 import { VariationColorDTO } from './dto/product.color';
+import { VariationSizeDTO } from './dto/product.size';
+import { ProudctMaterialDTO } from './dto/product.material';
 
 @Controller('product')
 export class ProductController {
@@ -62,9 +64,10 @@ export class ProductController {
   @Post('create_color')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async create_variation_color(@Body() color: VariationColorDTO) {
-    const { variationId } = color;
+  async create_color(@Body() values: VariationColorDTO) {
+    const { variationId } = values;
 
+    // If the variation is not exist response: Product could not found.
     const hasVariation = await this.productService.findVariationByID(
       variationId,
     );
@@ -75,5 +78,35 @@ export class ProductController {
         'Product variation could not found.',
       );
     }
+
+    // if color is not created for this variation then create a variation otherwise response: COLOR already created.
+    const hasColor = await this.productService.findColorByVariationId(
+      variationId,
+    );
+
+    if (!hasColor) {
+      return this.productService.createVariationColor(values);
+    }
+
+    return this.responseHelper.createResponse(
+      403,
+      'variation Color already created.',
+    );
+  }
+
+  // Create product size
+  @Post('create_size')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async create_size(@Body() values: VariationSizeDTO) {
+    return this.productService.createVariationSize(values);
+  }
+
+  // Create product material
+  @Post('create_material')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async create_material(@Body() values: ProudctMaterialDTO) {
+    return this.productService.createProductMaterial(values);
   }
 }
